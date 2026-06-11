@@ -30,11 +30,11 @@ agent = create_agent(
     system_prompt="You are a helpful assistant. Make sure that you only respond with whatever is coming as input to the agent, and do not add any extra commentary or explanation.",
 )
 
-if len(sys.argv) < 2:
-    print("Usage: python dynamic_agent_input.py \"<your message>\"")
-    sys.exit(1)
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python dynamic_agent_input.py \"<your message>\"")
+        sys.exit(1)
 
-user_input = " ".join(sys.argv[1:])
-
-result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
-print(result["messages"][-1].content)
+    user_input = " ".join(sys.argv[1:])
+    result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
+    print(result["messages"][-1].content)
