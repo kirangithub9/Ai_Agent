@@ -25,17 +25,24 @@ def create_daily_thought() -> str:
     return response.content
 
 agent = create_agent(
-    model="openai:gpt-4o",    
+    model="openai:gpt-4o",
     tools=[get_weather, create_daily_thought],
     system_prompt="You are a helpful assistant. Make sure that you only respond with whatever is coming as input to the agent, and do not add any extra commentary or explanation.",
 )
 
+# ─────────────────────────────────────────────────────────────
+# __main__ guard — CRITICAL
+# Without this, importing this file (e.g. from eval_Agent.py)
+# would trigger sys.exit(1) and kill the entire program.
+# With this guard:
+#   - "python dynamic_agent_input.py <msg>" → runs normally
+#   - "from dynamic_agent_input import agent" → skips this block
+# ─────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-    print("Usage: python dynamic_agent_input.py \"<your message>\"")
-    sys.exit(1)
+        print("Usage: python dynamic_agent_input.py \"<your message>\"")
+        sys.exit(1)
 
-user_input = " ".join(sys.argv[1:])
-
-result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
-print(result["messages"][-1].content)
+    user_input = " ".join(sys.argv[1:])
+    result = agent.invoke({"messages": [{"role": "user", "content": user_input}]})
+    print(result["messages"][-1].content)
