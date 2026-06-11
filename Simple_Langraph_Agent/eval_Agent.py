@@ -41,14 +41,14 @@ EXAMPLES = [
 ]
 
 # 2. Create dataset if needed, then always sync examples from EXAMPLES above.
-existing = [ds for ds in client.list_datasets() if ds.name == "agent-evals-v1"]
+existing = [ds for ds in client.list_datasets() if ds.name == "AI_Agent_evals"]
 if existing:
     dataset = existing[0]
     for example in client.list_examples(dataset_id=dataset.id):
         client.delete_example(example.id)
     print(f"Cleared existing examples from dataset: {dataset.name}")
 else:
-    dataset = client.create_dataset("agent-evals-v1")
+    dataset = client.create_dataset("AI_Agent_evals")
     print(f"Created dataset: {dataset.name}")
 
 client.create_examples(
@@ -109,7 +109,7 @@ def smart_evaluator(outputs: dict, reference_outputs: dict) -> dict:
 print("Running evaluation...")
 results = evaluate(
     run_agent,
-    data="agent-evals-v1",
+    data="AI_Agent_evals",
     evaluators=[smart_evaluator],
     experiment_prefix="test1-agent-evals",
     max_concurrency=2,
