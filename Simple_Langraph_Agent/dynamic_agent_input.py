@@ -30,7 +30,8 @@ agent = create_agent(
     system_prompt="You are a helpful assistant. Make sure that you only respond with whatever is coming as input to the agent, and do not add any extra commentary or explanation.",
 )
 
-if __name__ == "__main__":`n    if len(sys.argv) < 2:
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
     print("Usage: python dynamic_agent_input.py \"<your message>\"")
     sys.exit(1)
 
